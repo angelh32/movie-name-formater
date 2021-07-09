@@ -2,8 +2,12 @@ import { rejects } from "assert";
 import { ChapterLink, MediaData } from "../types";
 
 export function parseInside(text: string, start: string, end: string): string {
-  const local2 = text.split(start)
-  return local2[1].split(end)[0]
+  try {
+    const local2 = text.split(start)
+    return local2[1].split(end)[0]
+  } catch (error) {
+    return "XXXXXXXX"
+  }
 }
 
 export function compareChapters(a: ChapterLink, b: ChapterLink) {

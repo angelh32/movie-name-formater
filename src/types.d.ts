@@ -6,6 +6,7 @@ export interface ChapterLink {
 
 export interface MediaData {
   name?: string;
+  original?: string;
   year?: string;
   key?: string;
   url?: string;

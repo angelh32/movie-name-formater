@@ -37,11 +37,12 @@ describe("Imdb Operations", () => {
         ).rejects.toMatch(message.errorLink);
       })
     })
-    test("when url is correct it return the id", () => {
+    test.only("when url is correct it return the data", () => {
       const file = path.join(__dirname, "example.imdb.txt");
       const body: string = readFileSync(file, 'utf8');
       const result: MediaData = {
         name: "El grito",
+        original: "The Grudge",
         year: "2004",
         identifier: "imdbid",
       }

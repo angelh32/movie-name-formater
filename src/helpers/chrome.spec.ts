@@ -11,6 +11,8 @@ describe("#checkUrlCompatibility", () => {
     type: "movie",
   }
   test("when url is empty", () => {
-    return expect(saveMovie(testMovie)).resolves.toBe(true)
+    return saveMovie(testMovie).then(data=>{
+      return expect(data).toBe(true)
+    })
   })
 })

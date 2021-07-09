@@ -55,6 +55,9 @@ $(function() {
   }
 
   $('#processpage').click(() => {
+    processPage();
+  });
+  function processPage(): void {
     $('#processpage').text("Wait")
     chrome.tabs.query({ active: true, currentWindow: true }, tabs => {
       const tab = tabs[0];
@@ -64,15 +67,15 @@ $(function() {
           .then(() => $('#processpage').text("Ready"))
       }
       const code = { code: 'document.body.innerHTML' };
-      // const code = { code: 'document.querySelector("body").textContent' };
       return chrome.tabs.executeScript(tab.id, code, parseData);
     });
-  });
+  }
   $('#clear').click(() => {
     chrome.storage.local.clear(() => {
       updateList()
     });
   });
+  processPage();
 });
 
 function copyToClipboard(str, mimeType="text/plain") {

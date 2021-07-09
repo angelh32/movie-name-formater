@@ -25,11 +25,15 @@ export function parseData(body: string): Promise<MediaData> {
   if (!body){
     return Promise.reject(message.errorLink);
   }
-  const baseHtml = parseInside(body, 'title_wrapper','slate_wrapper');
-  const mediaName = parseInside(baseHtml, 'class="">','&nbsp');
-  const mediaYear = parseInside(baseHtml, 'inf">','</a>');
+  const baseHtml = parseInside(body, 'hero-title-block__title','TitleBlockMetaData__ListItemText');
+  const mediaNameTemp = parseInside(baseHtml, 'TitleHeader__TitleText','/h1>');
+  const mediaName = parseInside(mediaNameTemp, '>','<');
+  const mediaOriginalName = parseInside(baseHtml, 'Original title: ','</div>');
+  const mediaYearTemp = parseInside(baseHtml, 'StyledTextLin','/a>');
+  const mediaYear = parseInside(mediaYearTemp, '>','<');
   const mediadata: MediaData = {
     name: mediaName,
+    original: mediaOriginalName,
     year: mediaYear,
     identifier: imdbIdentifier
   }
