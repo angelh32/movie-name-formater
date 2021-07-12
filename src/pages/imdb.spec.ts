@@ -37,7 +37,7 @@ describe("Imdb Operations", () => {
         ).rejects.toMatch(message.errorLink);
       })
     })
-    test.only("when url is correct it return the data", () => {
+    test("when url is correct it return the data", () => {
       const file = path.join(__dirname, "example.imdb.txt");
       const body: string = readFileSync(file, 'utf8');
       const result: MediaData = {

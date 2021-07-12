@@ -31,6 +31,7 @@ const App = () => {
       return chrome.tabs.executeScript(tab.id, code, parseData);
     });
   }, []);
+
   function clearMediaStorage() {
     chrome.storage.local.clear(() => {
       setCurrent({})

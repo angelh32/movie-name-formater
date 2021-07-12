@@ -1,5 +1,6 @@
 import * as React from "react";
 import { MediaData } from "../types";
+import { buildComposedName } from "../helpers/helpers";
 
 interface Props {
   current: MediaData;
@@ -8,7 +9,7 @@ interface Props {
 
 export const CurrentItemComponent: React.FC<Props> = (props) => {
   const { name, original, year, identifier,key } = props.current;
-  const formatedName = `${name} (${year}) [${identifier}=${key}]`;
+  const formatedName = buildComposedName(props.current)
 
   function copyToClipboard() {
     navigator.clipboard.writeText(formatedName)

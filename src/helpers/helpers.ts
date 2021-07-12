@@ -1,4 +1,4 @@
-import { ChapterLink, MediaData } from "../types";
+import { MediaData } from "../types";
 
 export function parseInside(text: string, start: string, end: string): string {
   try {
@@ -7,18 +7,6 @@ export function parseInside(text: string, start: string, end: string): string {
   } catch (error) {
     return "XXXXXXXX"
   }
-}
-
-export function compareChapters(a: ChapterLink, b: ChapterLink) {
-  const numberOne = parseInt(a.number.replace(/.*-/, ""))
-  const numberTwo  = parseInt(b.number.replace(/.*-/, ""))
-  if (numberOne<numberTwo) {
-    return -1;
-  }
-  if (numberOne>numberTwo) {
-    return 1;
-  }
-  return 0;
 }
 
 export function buildComposedName(mediaData: MediaData): string{

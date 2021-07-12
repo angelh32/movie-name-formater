@@ -1,7 +1,7 @@
+import * as Promise from "bluebird";
 import { parseInside } from "../helpers/helpers";
-import * as Promise from "bluebird"
-import { MediaData, ChapterLink } from "../types";
 import { message } from "../helpers/messages";
+import { MediaData } from "../types";
 const imdbIdentifier = "imdbid";
 export function parseImdbData(url: string, body: string): Promise<MediaData> {
   return Promise.join(

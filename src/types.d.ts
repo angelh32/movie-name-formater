@@ -1,9 +1,3 @@
-export interface ChapterLink {
-  number?: string;
-  chapterLink?: string[];
-  url?: string;
-}
-
 export interface MediaData {
   name?: string;
   original?: string;
