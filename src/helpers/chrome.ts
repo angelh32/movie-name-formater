@@ -1,89 +1,48 @@
-import { SeriesLinks, ChapterLink, StorageSeries, MediaData } from "../types";
-import { compareChapters, buildComposedName } from "./helpers";
-import * as Promise from "bluebird"
+import * as Promise from "bluebird";
+import { Googlekeys, MediaData, StorageMedia } from "../types";
 
-type Googlekeys = "seriesNames" | "seriesLinks"
-const series: Googlekeys = "seriesLinks"
-const names: Googlekeys = "seriesNames"
+const mediaInfo: Googlekeys = "mediaInfo"
 
 /************ Storage structure ***********
- * sereies: SeriesLinks[]
+ * mediaInfo: [media:key:media]
  */
 type Storage = chrome.storage.LocalStorageArea;
 const outStorage: Storage = chrome.storage.local;
 
-export function saveMovie(media: MediaData, saveChapter = false, storage = outStorage): Promise<string> {
-  return getSerie(media.name).then(currentSerie => {
-    if (currentSerie && !saveChapter) {
-      return currentSerie.name;
+export function saveMovie(media: MediaData, saveChapter = false): Promise<MediaData> {
+  return getSerie(media.name).then((currentMedia: MediaData) => {
+    if (currentMedia) {
+      return currentMedia;
     }
-    return getPromisified(series).then(seriesNames => {
+    return getPromisified(mediaInfo).then(storage => {
       return savePromisified({
-        [series]: {
-          ...seriesNames,
+        [mediaInfo]: {
+          ...storage,
           [media.key]: media
         }
       })
         .then(() => {
-          return media.name
+          return media
         })
     })
   })
 
 }
 
-export function updateNames() {
-  return getPromisified(series)
-    .then((savedObject: StorageSeries) => {
-      return savePromisified({ [names]: Object.keys(savedObject).map(key=>{
-        const current = savedObject[key]
-        return buildComposedName(current);
-      }) });
-    });
+
+export function getMediaFromStorage(): Promise<MediaData[]> {
+  return getPromisified(mediaInfo).then((mediaFromStorage:StorageMedia)=>{
+    const currentKeys = Object.keys(mediaFromStorage);
+    return currentKeys.map(key=>{
+      return mediaFromStorage[key]
+    })
+  });
 }
 
-export function getNames(storage = outStorage): Promise<string[]> {
-  return getPromisified(names, true).then((value: string[])=>{
-    return value;
-  })
-}
 
-export function checkChapter(serieName: string, chapterUrl: string, storage = outStorage): Promise<void> {
-  const chapterNumber = chapterUrl.replace(/.*\//, "")
-  return getSerie(serieName).then(currentSerie => {
-    const exist = currentSerie.chapters.filter(chapter=>chapterUrl===chapter.url)
-    if (exist.length>0){
-      return Promise.reject(new Error(`The chapter ${chapterNumber} was saved previously`))
-    }
-    return;
-  })
-}
-
-export function saveChapter(serieName: string, chapter: ChapterLink, storage = outStorage): Promise<ChapterLink> {
-  return getSerie(serieName).then(currentSerie => {
-    const builtSerie = {
-      ...currentSerie,
-      chapters: [...currentSerie.chapters, chapter]
-    }
-    return saveMovie(builtSerie, true).then(() => chapter);
-  })
-}
-
-export function sortChapter(serieName: string, storage = outStorage): Promise<string> {
-  return getSerie(serieName).then(currentSerie => {
-    const sorted = currentSerie.chapters.sort(compareChapters);
-    const builtSerie = {
-      ...currentSerie,
-      chapters: sorted
-    }
-    return saveMovie(builtSerie, true).then(() => serieName);
-  })
-}
-
-export function getSerie(serieName: string, storage = outStorage): Promise<SeriesLinks> {
-  console.log("file: chrome.ts ~ line 88 ~ getSerie ~ serieName", serieName)
-  return getPromisified(series).then((value: StorageSeries) => {
-    return value[serieName]
+export function getSerie(mediaName: string): Promise<MediaData> {
+  return getPromisified(mediaInfo).then((value: StorageMedia) => {
+    return value[mediaName]
   })
 }
 

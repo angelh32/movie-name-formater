@@ -1,14 +1,13 @@
-import * as Promise from "bluebird"
-import { parseImdbData } from "./pages/imdb";
-import { ParsersObject, Parser } from "./types";
-import { message } from "./helpers/messages";
+import * as Promise from "bluebird";
 import { saveMovie } from "./helpers/chrome";
+import { message } from "./helpers/messages";
+import { parseImdbData } from "./pages/imdb";
+import { MediaData, Parser, ParsersObject } from "./types";
 
-export function getMediaData(firsturl: string, body: any): Promise<void> {
+export function getMediaData(firsturl: string, body: any): Promise<MediaData> {
   return checkUrlCompatibility(firsturl).then((parserFunction) => {
     return parserFunction(firsturl, body)
       .then(saveMovie)
-      .then((movie) => console.log(`Completed: ${movie}`));
   });
 }
 

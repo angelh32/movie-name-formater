@@ -1,4 +1,3 @@
-import { rejects } from "assert";
 import { ChapterLink, MediaData } from "../types";
 
 export function parseInside(text: string, start: string, end: string): string {

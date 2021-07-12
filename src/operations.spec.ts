@@ -1,6 +1,5 @@
+import { MediaData, message } from "./helpers/messages";
 import { checkUrlCompatibility } from "./operations";
-import { message, MediaData } from "./helpers/messages";
-import { parseImdbData } from "./pages/imdb";
 export type Parser = (a: string, b: string) => Promise<MediaData>
 
 describe("#checkUrlCompatibility", () => {

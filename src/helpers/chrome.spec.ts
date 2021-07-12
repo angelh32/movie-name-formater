@@ -1,5 +1,5 @@
-import { saveMovie } from "./chrome"
 import { MediaData } from "../types"
+import { saveMovie } from "./chrome"
 
 describe("#checkUrlCompatibility", () => {
   const testMovie: MediaData = {
