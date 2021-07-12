@@ -17,11 +17,12 @@ export const CurrentItemComponent: React.FC<Props> = (props) => {
   return (<div>
     <p>Name: {name}</p>
     <p>Original: {original}</p>
-    <p>Original: {year}</p>
+    <p>Year: {year}</p>
     <p>Identifier: {identifier}</p>
+    <p>Key: {key}</p>
     <p>{formatedName}</p>
-    <button id="copy-name" onClick={copyToClipboard}>Copy To clipboard</button>
-    <button id="clear" onClick={props.clearData}>clear Data</button>
+    <button id="copy-name" onClick={copyToClipboard}>Copy to clipboard</button>
+    <button id="clear" onClick={props.clearData}>Clear Data</button>
   </div>)
 };
 

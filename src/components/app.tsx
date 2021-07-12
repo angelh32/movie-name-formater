@@ -2,8 +2,8 @@ import * as React from "react";
 import { getMediaFromStorage } from "../helpers/chrome";
 import { getMediaData } from "../operations";
 import { MediaData } from "../types";
-import { CurrentItemComponent } from "./currentMovie";
-import { ListComponent } from "./list";
+import { CurrentItemComponent } from "./CurrentItemComponent";
+import { ListComponent } from "./ListComponent";
 
 const App = () => {
   const queryInfo = {
