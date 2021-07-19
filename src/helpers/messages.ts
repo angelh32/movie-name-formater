@@ -6,4 +6,5 @@ export const message = {
   errorLink: "Invalid Link",
   errorBody: "Invalid body data",
   errorUrl: "Invalid Server",
+  errorMedia: "Invalid Media",
 }
